@@ -20,6 +20,8 @@
 
 [user]
     useConfigOnly = true
+	email = sreekanth199627@gmail.com
+	name = Sreekanth
 
 [alias]
     sm = submodule update --init --recursive
