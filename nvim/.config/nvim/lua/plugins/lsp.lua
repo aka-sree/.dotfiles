@@ -3,10 +3,12 @@ return {
   {
     "williamboman/mason.nvim",
     build = ":MasonUpdate",
+    cmd = "Mason",
     opts = {},
   },
   {
     "williamboman/mason-lspconfig.nvim",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "neovim/nvim-lspconfig",
       "folke/neodev.nvim",
@@ -55,9 +57,9 @@ return {
             "--function-arg-placeholders",
             "--log=error",
             "--pch-storage=memory",
-            -- adjust if your compile_commands.json lives in build/
+            "--limit-results=50",
+            "--malloc-trim",
             "--compile-commands-dir=build",
-            -- widen for your toolchains (tweak paths if needed)
             "--query-driver=/usr/bin/clang-*,/usr/bin/clang++,/usr/bin/g++*,/usr/bin/cc*,/usr/bin/arm-none-eabi-*",
           },
           capabilities = capabilities,

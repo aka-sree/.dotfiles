@@ -13,23 +13,16 @@ return {
                 { section = "startup" },
             },
         },
-        indent = { enabled = true },
-        input = {
-            enabled = true
-        },
+        indent = { enabled = false },
+        input = { enabled = true },
         notifier = {
             enabled = true,
             timeout = 4000,
         },
         quickfile = { enabled = true },
         scroll = { enabled = false },
-        statuscolumn = { enabled = true },
-        words = { enabled = true },
-        styles = {
-            notification = {
-                -- wo = { wrap = true } -- Wrap notifications
-            }
-        }
+        statuscolumn = { enabled = false },
+        words = { enabled = false },
     },
     keys = {
         -- { "<leader>z",  function() Snacks.zen() end, desc = "Toggle Zen Mode" },
