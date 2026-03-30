@@ -14,24 +14,26 @@ create_session() {
         return
     fi
 
-    tmux new-session -s "$name" -c "$dir" -d
+    tmux new-session -s "$name" -n "nvim" -c "$dir" -d
     tmux send-keys  -t "$name"    "nvim ." C-m    # window 1: nvim
-    tmux new-window -t "$name" -c "$dir"          # window 2: shell
-    tmux new-window -t "$name" -c "$dir"          # window 3: lazygit
+    tmux new-window -t "$name" -n "shell" -c "$dir"          # window 2: shell
+    tmux new-window -t "$name" -n "lazygit" -c "$dir"          # window 3: lazygit
     tmux send-keys  -t "$name"    "lazygit" C-m
-    tmux new-window -t "$name" -c "$dir"          # window 4: copilot
+    tmux new-window -t "$name" -n "copilot" -c "$dir"          # window 4: copilot
     tmux send-keys  -t "$name"    "copilot" C-m
     tmux select-window -t "$name":1
 }
 
-# Collect targets: args if provided, otherwise fzf multi-select
+# Collect targets: args if provided, otherwise fzf single-select
 if [[ $# -ge 1 ]]; then
     targets=("$@")
 else
-    mapfile -t targets < <(
+    selected=$(
         find "${directories[@]}" -mindepth 1 -maxdepth 1 -type d 2>/dev/null \
-            | fzf-tmux -p --multi --prompt="Select repos (TAB to multi-select): "
+            | fzf-tmux -p --prompt="Select repo: "
     ) || true
+    [[ -z "${selected:-}" ]] && exit 0
+    targets=("$selected")
 fi
 
 [[ ${#targets[@]} -eq 0 ]] && exit 0

@@ -1,13 +1,9 @@
 #!/bin/bash
 
-# Define the source of truth
-SETUP_DIR=$HOME/linux-setup
+# Define the source of truth — resolve to the directory this script lives in
+SETUP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 echo "--- 1. Installing Plugin Managers ---"
-# Install Oh My Zsh
-if [ ! -d "$HOME/.oh-my-zsh" ]; then
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-fi
 
 # Install Tmux Plugin Manager
 if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
@@ -15,21 +11,19 @@ if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
 fi
 
 echo "--- 2. Creating Symlinks ---"
-# Ensure Neovim config directory exists
-mkdir -p $HOME/.config/nvim
+# Ensure ~/.config exists
+mkdir -p $HOME/.config
 
 # Force-link Shell & Tmux
-ln -sf $SETUP_DIR/zshrc $HOME/.zshrc
 ln -sf $SETUP_DIR/bashrc $HOME/.bashrc
-ln -sf $SETUP_DIR/tmux.conf $HOME/.tmux.conf
+ln -sf $SETUP_DIR/zsh/.zshrc $HOME/.zshrc
+ln -sf $SETUP_DIR/shell_common.sh $HOME/.shell_common.sh
+ln -sf $SETUP_DIR/tmux/.tmux.conf $HOME/.tmux.conf
 
-# Force-link Neovim
-ln -sf $SETUP_DIR/nvim/init.lua $HOME/.config/nvim/init.lua
-
-# Use -n to prevent nesting the lua folder inside itself
-if [ -d "$SETUP_DIR/nvim/lua" ]; then
-    ln -sfn $SETUP_DIR/nvim/lua $HOME/.config/nvim/lua
-fi
+# Force-link entire Neovim config directory
+# Remove any existing nvim config (file, symlink, or directory)
+rm -rf $HOME/.config/nvim
+ln -sfn $SETUP_DIR/nvim/.config/nvim $HOME/.config/nvim
 
 echo "--- 3. Setup Complete ---"
 echo "Restart terminal and run: tmux source-file ~/.tmux.conf"
