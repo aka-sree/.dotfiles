@@ -1,7 +1,7 @@
 # .bashrc
 # Force-switch to Zsh if it exists
 if [ -t 1 ]; then
-  exec zsh
+   exec zsh
 fi
 
 # Source global definitions

@@ -10,6 +10,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Disable omz auto-update check on every shell start (run `omz update` manually)
 zstyle ':omz:update' mode disabled
+DISABLE_AUTO_UPDATE=true
 
 plugins=(
     git
@@ -20,6 +21,7 @@ plugins=(
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244'
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_USE_ASYNC=1
+ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 
 source $ZSH/oh-my-zsh.sh
 

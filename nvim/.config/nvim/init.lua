@@ -62,9 +62,10 @@ require("lazy").setup({
       }
     },
 
-    -- FILE EXPLORER (The Modern Fixed Block)
+    -- FILE EXPLORER (disabled in favor of neo-tree in plugins/neo-tree.lua)
   {
     "nvim-tree/nvim-tree.lua",
+    enabled = false,
     opts = {
       live_filter = { 
         prefix = "[Search]: ", 
@@ -169,7 +170,6 @@ vim.lsp.enable("clangd")
 -- ========================================================================== --
 -- 5. KEYMAPS (The Toolbox)
 -- ========================================================================== --
-vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>', { silent = true })
 vim.keymap.set('n', '<leader>gg', ':LazyGit<CR>')
 
 -- FIXED TELESCOPE KEYMAPS (Using function wrappers to prevent "module not found")
