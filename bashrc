@@ -27,7 +27,10 @@ PS1='\[\e[1;34m\]\w\[\e[0;33m\]$(__git_branch)\[\e[0m\] \$ '
 # Key bindings
 # ---------------------------------------------------------------------------
 tmux_sessionizer() { ~/.config/bin/tmux-sessionizer.sh "$@"; }
-bind -x '"\C-p": tmux_sessionizer'
+if [[ $- = *i* ]]
+then
+    bind -x '"\C-p": tmux_sessionizer'
+fi
 
 # ---------------------------------------------------------------------------
 # Bash completion
